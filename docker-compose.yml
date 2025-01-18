@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  thinplate-service:
+    image: my_thinplate_with_api
+    container_name: thinplate-container
+    ports:
+      - "8001:8000" # Expone el servicio de Thin Plate en el puerto 8001
+    networks:
+      - pipeline-network
+
+  wav2lip-service:
+    image: my_wav2lip_with_api
+    container_name: wav2lip-container
+    ports:
+      - "8002:8000" # Expone el servicio de Wav2Lip en el puerto 8002
+    networks:
+      - pipeline-network
+
+  pipeline-service:
+    build:
+      context: ./pipeline
+    container_name: pipeline-container
+    ports:
+      - "8000:8000" # Expone el servicio principal en el puerto 8000
+    depends_on:
+      - thinplate-service
+      - wav2lip-service
+    networks:
+      - pipeline-network
+
+networks:
+  pipeline-network:
+    driver: bridge
+
+
+
+
+
+
+
+
+
+
+
