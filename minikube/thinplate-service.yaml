@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thinplate-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: thinplate-service
+  template:
+    metadata:
+      labels:
+        app: thinplate-service
+    spec:
+      containers:
+        - name: thinplate-container
+          image: felipediaz1/my_thinplate_with_api:latest  # Imagen en Docker Hub
+          ports:
+            - containerPort: 8000
+          imagePullPolicy: Always  # Asegura que siempre descargue la imagen más reciente
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: thinplate-service
+spec:
+  type: NodePort
+  selector:
+    app: thinplate-service
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+      nodePort: 30001
+

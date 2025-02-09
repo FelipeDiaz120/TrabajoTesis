@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pipeline-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pipeline-service
+  template:
+    metadata:
+      labels:
+        app: pipeline-service
+    spec:
+      containers:
+        - name: pipeline-service
+          image: felipediaz1/generacin-pipeline-service:latest  # Usar imagen de Docker Hub
+          ports:
+            - containerPort: 8000
+          imagePullPolicy: Always  # Asegura que Minikube descargue la imagen desde Docker Hub
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pipeline-service
+spec:
+  type: NodePort
+  selector:
+    app: pipeline-service
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+      nodePort: 30000
+

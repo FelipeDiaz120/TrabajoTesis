@@ -10,8 +10,8 @@ app = FastAPI()
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 VIDEO_DIR = os.path.join(BASE_DIR, "videos")
 TEMP_DIR = os.path.join(BASE_DIR, "temp")
-THIN_PLATE_URL = "http://thinplate-container:8000/thin_plate/"
-WAV2LIP_URL = "http://wav2lip-container:8000/wav2lip/"
+THIN_PLATE_URL = "http://thinplate-service:8000/thin_plate/"
+WAV2LIP_URL = "http://wav2lip-service:8000/wav2lip/"
 
 
 # Función para validar el tipo de archivo de imagen
